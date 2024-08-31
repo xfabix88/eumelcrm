@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+
+<div class="row m-0">
+    <div class=" row g-0 ">
+      <div class="col-4 topleiste"> 
+          <span class="toptitel"><strong>Zusatztext Rechnung</strong></span>
+      </div>
+      <div class="col-6 topleiste"> 
+        <span class="toptitel"><strong>DATEN RECHNUNGSEMPFÄNGER</strong></span>
+    </div>
+
+    </div>
+    <div class="col border side">
+
+    </div>
+
+        
+      <div class="col-11 " style="height: 100vh;">
+
+        <div class="row mt-2">
+          <div class="col-3 text-end">
+            <p style="height: 38px; line-height: 38px;">Zusatztext:</p>
+          </div>
+          <div class ="col-md-6 offset-md-0">            
+            <form method="POST">
+              {% csrf_token %}
+              {{ form.as_p }}
+          </br>
+              <button type="submit" class="btn btn-lg btn-success">SPEICHERN</button>
+              <a type="button" class="btn btn-lg btn-secondary" href="{% url 'invoice_detail' current_invoice.id %}">ABBRECHEN</a>
+          </form>
+      </div>
+        </div>
+
+
+
+            
+      </div>
+</div>
+
+
+{%endblock%}

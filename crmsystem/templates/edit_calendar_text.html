@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+<div class="row m-0">
+    <div class=" row g-0 ">
+      <div class="col-12 topleiste border-top"> 
+        <span class="toptitel" >
+          <strong>{{current_customer.first_name}} {{current_customer.last_name}}</strong>
+      </span>
+      <span class="toptitel_add">
+              ( 30 Jahre - Nr. {{current_customer.id}} )
+      </span>
+      <span class="toptitel" >
+          <strong>Termin: {{current_calendar.day|date:"d.m.Y"}}</strong> von <strong>{{current_calendar.time_begin|time:"H:i"}} </strong>bis <strong>{{current_calendar.time_end|time:"H:i"}} Uhr</strong>
+      </span>
+      </div>
+
+    </div>
+      <div class="col border side">
+  
+      </div>
+
+        
+      <div class="col-11 " style="height: 100vh;">
+        <div class="row">
+
+          <div class ="col-12 ">            
+              <form method="POST" >
+                  {% csrf_token %}
+                  {{ form.as_p }}
+              </br>
+                  <button type="submit" class="btn btn-lg btn-success">SPEICHERN</button>
+                  <a type="button" class="btn btn-lg btn-secondary" href="{% url 'calendar_detail' current_calendar.id %}">ABBRECHEN</a>
+              </form>
+          </div>
+
+        </div>
+
+
+
+            
+      </div>
+</div>
+
+
+{%endblock%}

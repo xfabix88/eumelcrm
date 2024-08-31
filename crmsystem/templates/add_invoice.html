@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+
+<div class="row m-0">
+    <div class=" row g-0 ">
+      <div class="col-4 topleiste"> 
+          <span class="toptitel"><strong>NEUE RECHNUNG ANLEGEN</strong></span>
+      </div>
+      <div class="col-6 topleiste"> 
+        <span class="toptitel"><strong>DATEN RECHNUNGSEMPFÄNGER</strong></span>
+    </div>
+
+    </div>
+    <div class="col border side">
+
+    </div>
+
+        
+      <div class="col-11 " style="height: 100vh;">
+        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar bg-success" style="width: 25%"></div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-3 text-end">
+            <p style="height: 38px; line-height: 38px;">Titel:</p>
+            <p style="height: 38px; line-height: 38px;">Vorname:</p>
+            <p style="height: 38px; line-height: 38px;">Nachname:</p>
+            <p style="height: 38px; line-height: 38px;">Straße:</p>
+            <p style="height: 38px; line-height: 38px;">Hausnummer:</p>
+            <p style="height: 38px; line-height: 38px;">Postleitzahl:</p>
+            <p style="height: 38px; line-height: 38px;">Ort:</p>
+            <p style="height: 38px; line-height: 38px;">Land:</p>
+          </div>
+          <div class ="col-md-6 offset-md-0">            
+            <form method="POST">
+              {% csrf_token %}
+              {{ form.as_p }}
+          </br>
+              <button type="submit" class="btn btn-lg btn-success"> FORTSETZEN</button>
+              <a type="button" class="btn btn-lg btn-danger" href="{% url 'customer_invoice' current_customer.id%}">ABBRECHEN</a>
+          </form>
+      </div>
+        </div>
+
+
+
+            
+      </div>
+</div>
+
+
+{%endblock%}

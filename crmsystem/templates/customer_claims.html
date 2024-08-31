@@ -1,0 +1,149 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+{% load static %}
+
+<div class="row m-0 border-top ">
+    <div class=" row g-0 ">
+        <div class="col-4 topleiste "> 
+            <span class="toptitel" >
+                <strong>{{current_customer.first_name}} {{current_customer.last_name}}</strong></span>
+            <span class="toptitel_add">( 30 Jahre - Nr. {{current_customer.id}} )</span>
+        </div>
+
+    </div>
+</div>
+<div class="row g-0">
+    <div class="col-1 text-center border side ">
+
+        <ul class="sidebar">
+            <li class="bg-secondary"">
+                <div class="container ">
+                    <input  type="image" style="vertical-align: bottom; " src="{% static './images/face-regular-72.png' %}" />
+                    <div class="overlay">
+                        <a href="{% url 'customer' current_customer.id  %}">
+                        <input type="image" style="vertical-align: bottom;" src="{% static './images/face-solid-72.png' %}" />
+                        </a>
+                    </div>
+                </div>
+            </li> 
+            
+            <li class="bg-secondary">
+                <div class="container">
+                    <input class="input_active" type="image" style="vertical-align: bottom;" src="{% static './images/leaf-regular-72.png' %}" />
+                    <div class="overlay">
+                        <a href="{% url 'customer_claims' current_customer.id  %}">
+                        <input type="image" style="vertical-align: bottom;" src="{% static './images/leaf-solid-72.png' %}" />
+                        </a>
+                        </div>
+                </div>
+                
+                
+            </li>
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" style="vertical-align: bottom;" src="{% static './images/calendar-regular-72.png' %}" />
+                    <div class="overlay">
+                        <a href="{% url 'customer_calendar' current_customer.id  %}">
+                            <input type="image" style="vertical-align: bottom;" src="{% static './images/calendar-solid-72.png' %}" />
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" style="vertical-align: bottom;" src="{% static './images/wallet-regular-72.png' %}" />
+                    <div class="overlay">
+                            <a href="{% url 'customer_invoice' current_customer.id  %}">
+                                <input type="image" style="vertical-align: bottom;" src="{% static './images/wallet-solid-72.png' %}" />
+                            </a>
+                        </div>
+                </div>
+                
+            </li>
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" style="vertical-align: bottom;" src="{% static './images/paper-plane-regular-72.png' %}" />
+                    <div class="overlay">
+                        <input type="image" style="vertical-align: bottom;" src="{% static './images/paper-plane-solid-72.png' %}" />
+                        </div>
+                </div>
+            </li>
+        </ul>
+        
+    </div>
+    
+    <div class="col-11" style="height: 100vh;"> 
+        <div class="row m-0 text-start border-top border-end side ">
+            <div class="col-2 g-0 side border-bottom">
+            
+            </div>
+            <div class="col-10  mt-2 g-0 side  ">
+                <div class="row m-0 text-start">
+                    <div class="col-6 p-2  border-start border-top border-end rounded-top bg-white">
+                        <strong>Heilungsverlauf</strong>
+                    </div>  
+                    <div class="col-6 p-2  m-0 g-0 side border-top border-bottom rounded-top" >
+
+                        <a href="{%url 'anamnese' current_customer.id%}" class="text-dark text-decoration-none">Anamnesebogen</a>
+                
+                    </div>  
+                </div>
+            </div>  
+        </div>
+
+        <div class="row m-0 text-start" >
+
+                <div class="row mt-2">
+                    <div class="col-2">   
+                        <div id="list-example" class="list-group">
+                            {% if current_calendars %}
+                            {%for current_calendar in current_calendars %}
+                                <a class="list-group-item list-group-item-action text-decoration-none" href="#list-item-{{current_calendar.id}}">
+                                    <strong>{{current_calendar.day}}</strong><br>{{ current_calendar.get_product_display }}</a>
+                                </a>
+                                
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                        <div class="col-8">
+                            <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0"></div>
+                            {% if current_calendars %}
+                            {%for current_calendar in current_calendars %}
+
+                            <div class="card mb-2" style="width: 90rem;">
+                                <div class="card-body">
+                                  
+                                    <h3 class="card-subtitle mb-2 text-body-secondary">{{current_calendar.day|date:"d.m.Y"}} von {{current_calendar.time_begin|time:"H:i"}} bis {{current_calendar.time_end|time:"H:i"}} Uhr</h6>
+                                    <h5 id="list-item-{{current_calendar.id}}">{{current_calendar.category}}</h4>
+                                    <p>{{current_calendar.text}}</p>
+
+                                </div>
+                              </div>
+
+                            {% endfor %}
+                            {% endif %}
+                          </div>
+    
+                      
+                
+                
+
+            </div>
+        </div>        
+    
+              
+
+    </div>               
+
+</div>    
+
+
+
+
+
+
+
+{%endblock%}

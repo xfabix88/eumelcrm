@@ -1,0 +1,264 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+{% load static %}
+
+<div class="row m-0 border-top ">
+    <div class=" row g-0 ">
+        <div class="col-9 topleiste "> 
+            <span class="toptitel" >
+                <strong>{{current_customer.first_name}} {{current_customer.last_name}}</strong>
+            </span>
+            <span class="toptitel_add">
+                    ( 30 Jahre - Nr. {{current_customer.id}} )
+            </span>
+            <span class="toptitel" >
+                <strong>Rechnung: {{current_invoice.number}}</strong>
+            </span>
+            <span class="toptitel" >
+                <strong>Status: {{current_invoice.status}}</strong>
+            </span>
+
+
+        </div>
+        <div class="col-1">
+            {% if current_invoice.status == 'offen' %} 
+            <button type="button"  style="width: 150px;" class="btn btn-sm btn-success mt-3" data-bs-toggle="modal" data-bs-target="#freigeben">
+                 FREIGEBEN
+              </button>
+              {% endif %}
+        </div>
+        <div class="col-1">
+            {% if current_invoice.status == 'offen' or current_invoice.status == 'bezahlt'%}
+            <button type="button"  style="width: 150px;" class="btn btn-sm btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#stornieren">
+                STORNIEREN
+             </button>
+            {% else %}
+             <button type="button"  style="width: 150px;" class="btn btn-sm btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#löschen">
+                LÖSCHEN
+             </button>
+            {% endif %}
+        </div>
+        <div class="col-1">
+            <a href="" type="button" class="btn btn-sm btn-secondary mt-3" style="width: 150px;">PDF ERZEUGEN</a>
+        </div>
+
+    </div>
+</div>
+<div class="row g-0">
+    <div class="col-1 text-center border side ">
+
+       
+    </div>
+    
+    <div class="col-11" style="height: 100vh;"> 
+
+
+        <div class="row m-0 text-start" >
+            <div class="col-9 ps-2  border">
+                <div class="row m-2 border">
+                    <div class="col-6">
+                        <div class="row ">
+                            <a class="text-dark"  href="{% url 'update_invoice_reci' current_invoice.id %}"><strong>Rechnungsempfänger</strong></a>
+                            <p></p> 
+                            <span><strong>{{current_invoice.reci_first_name}} {{current_invoice.reci_last_name}}</strong></span>
+                            <span>{{current_invoice.reci_street}} {{current_invoice.reci_housenumber}}</span>
+                            <span>{{current_invoice.reci_plz}} {{current_invoice.reci_city}}</span>
+                            <span>{{current_invoice.reci_country}}</span>   
+                            <span>KUNDE: {{current_invoice.customer}}</span>  
+                            <p></p> 
+
+                        </div>
+                    </div>
+                    <div class="col-6 ">
+                        <div class="row">
+                            <a class="text-dark" href="{% url 'update_invoice_date' current_invoice.id %}"><strong>Daten ändern</strong></a>
+                            <p></p>
+                            
+                            <table class="ms-2">
+                                <tr>
+                                    <td class="col-1">Rechnungsdatum</td>
+                                    <td class="col-1">{{current_invoice.date_begin|date:"d.m.Y"}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-1">Zahlungsziel:</td>
+                                    <td class="col-1">{{current_invoice.date_end|date:"d.m.Y"}}</td>
+                                </tr>
+                                <tr>
+                                    {% if current_invoice.already_paid == True%}
+                                    <td class="col-1 text-success">bereits bezahlt:</td>
+                                    
+                                        <td class="col-1 text-success">Ja</td>
+                                    {% else %}
+                                    <td class="col-1">bereits bezahlt:</td>
+                                        <td class="col-1">Nein</td>
+                                    {%endif%}
+                                </tr>
+                                <tr>
+                                    <td class="col-1">Diagnosen anzeigen:</td>
+                                    {% if current_invoice.show_diagnose == True%}
+                                        <td class="col-1">Ja</td>
+                                    {% else %}
+                                        <td class="col-1">Nein</td>
+                                    {%endif%}
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                            
+                </div>
+                {% if current_invoice.show_diagnose == True %}
+                <div class="row m-2 border">
+                    
+                    <a><strong>Diagnosen</strong></a>
+                    
+                    <a>{{current_customer.diagnose}}</a>
+                  
+
+                      
+                    <p></p>
+                </div>
+                {% endif %}
+                <div class="row m-2 border">
+                    <a><strong>Terminübersicht</strong></a>
+
+                    {% if calendars %}
+                    {%for calendar in calendars %}
+
+                    
+                    <a class="text-dark"  href="{% url 'calendar_detail' calendar.id %}">Am {{calendar.day|date:"d.m.Y"}} von {{calendar.time_begin|time:"H:i"}} bis {{calendar.time_end|time:"H:i"}} Uhr</a>
+
+
+
+                    {% endfor %}
+                {% endif %}
+                    <p></p>
+                </div>
+                <div class="row m-2 border">
+                    <div class>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col-2">Position</th>
+                                    <th scope="col-4">Beschreibung</th>
+                                    <th scope="col-1">Anzahl</th>
+                                    <th scope="col-1">Faktor</th>
+                                    <th scope="col-1">Einzel (€)</th>         
+                                    <th scope="col-2">Gesamt (€)</th>                           
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                {%for a in list %}
+                                {% if a.0 != '<-->'%}
+                                <tr class="align-top">
+                                    <td class="col-2">{{a.0}}</td>
+                                    <td class="col-4">{{a.1}}</td> 
+                                    <td class="col-1 ps-2">{{a.2}}</td> 
+                                    <td class="col-1">{{a.3}}</td>
+                                    <td class="col-1">{{a.4}}</td> 
+                                    <td class="col-2">{{a.5}}</td> 
+                                </tr>
+                                {%endif%}
+                                {%endfor%}
+                               
+                                <tr>
+                                    
+                                    <td class="col-2 border-top" ></td>
+                                    <td class="col-4 border-top"> </td> 
+                                    <td class="col-1 border-top"></td> 
+                                    <td class="col-1 border-top"> </td> 
+                                    <td class="col-1 border-top"> <strong class="fs-5 ">Gesamtbetrag</strong></td> 
+                                    <td class="col-2 border-top"> <strong class="fs-5">{{sum}} €</strong></td> 
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                    <p></p>
+
+                </div>
+                <div class="row m-2 border">
+                    <a  class="text-dark" href="{% url 'update_invoice_text' current_invoice.id %}"><strong>Zusatztext</strong></a>
+
+                    {% if current_invoice.text %}
+                    <a>{{current_invoice.text}}</a>
+                    {% endif %}
+                    <p></p>
+                </div>
+
+            </div>
+            <div class="col-3 border  ">
+                <div class="row  m-2 border">
+                    <a>{{current_invoice.status}}</a>
+                </div>
+            </div>
+
+        </div>
+    </div>               
+
+</div>    
+
+        <!-- Modal -->
+        <div class="modal fade" id="freigeben" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Rechnung freigeben</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                Rechnung wurde geprüft und wird nun freigegeben.
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ZURÜCK</button>
+                <a href="{% url 'accept_invoice' current_invoice.id %}" role="button" class="btn btn-success">FREIGEBEN</a>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="modal fade" id="stornieren" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Rechnung stornieren</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                Rechung wirklich stornieren?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ZURÜCK</button>
+                <a href="{% url 'storno_invoice' current_invoice.id%}" role="button" class="btn btn-danger">STORNIEREN</a>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="modal fade" id="löschen" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Rechnung löschen</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                Rechung wirklich löschen?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ZURÜCK</button>
+                <a href="{% url 'delete_invoice' current_invoice.id%}" role="button" class="btn btn-danger">LÖSCHEN</a>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+
+
+
+{%endblock%}

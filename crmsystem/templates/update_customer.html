@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+<div class="row m-0">
+    <div class=" row g-0  border-top">
+      <div class="col-4 topleiste border-top"> 
+          <span class="toptitel"><strong>ANPASSEN PATIENTEN</strong></span>
+      </div>
+
+    </div>
+      <div class="col border side">
+  
+      </div>
+
+        
+      <div class="col-11 " style="height: 100vh;">
+
+        <div class ="col-md-6 offset-md-3">            
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+            </br>
+                <button type="submit" class="btn btn-lg btn-success">ÄNDERN</button>
+                <a type="button" class="btn btn-lg btn-secondary" href="{% url 'customer' current_customer.id  %}" >ABBRECHEN</a>
+            </form>
+            
+        </div>
+
+
+            
+      </div>
+</div>
+
+
+{%endblock%}

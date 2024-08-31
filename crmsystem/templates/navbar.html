@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar">
+    <div class="container-fluid text-center">
+      <a class="navbar-brand text-center fw-bold" href="{% url 'home' %}">HPCRM</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'customers' %}">Patienten</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'invoices_open' %}">Rechnungen</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'calendar' %}">Termine</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'calendar' %}">Kalender</a>
+          </li>
+
+
+          <li class="nav-item text-end">
+
+          </li>
+
+
+        </ul>
+        <a class="nav-link active" aria-current="page" href="{% url 'logout_user' %}">Ausloggen</a>
+        {% endif %}
+        </form>
+      </div>
+    </div>
+  </nav>

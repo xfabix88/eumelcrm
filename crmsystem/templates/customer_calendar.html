@@ -1,0 +1,126 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+{% load static %}
+
+<div class="row m-0 border-top ">
+    <div class=" row g-0 ">
+        <div class="col-4 topleiste "> 
+            <span class="toptitel" >
+                <strong>{{customer_calendar.first_name}} {{customer_calendar.last_name}}</strong></span>
+            <span class="toptitel_add">( 30 Jahre - Nr. {{customer_calendar.id}} )</span>
+        </div>
+        <div class="col-1 ">
+            <a href="{% url 'add_calendar' customer_calendar.id%}" type="button" class="btn btn-success mt-3">NEUER TERMIN</a>
+        </div>
+    </div>
+</div>
+<div class="row g-0">
+    <div class="col-1 text-center border side ">
+
+        <ul class="sidebar">
+            <li class="bg-secondary">
+                <div class="container ">
+                    <input  type="image" style="vertical-align: bottom; " src="{% static './images/face-regular-72.png' %}" />
+                    <div class="overlay">
+                        <a href="{% url 'customer' customer_calendar.id  %}">
+                        <input type="image" style="vertical-align: bottom;" src="{% static './images/face-solid-72.png' %}" />
+                        </a>
+                    </div>
+                </div>
+            </li> 
+            
+            <li class="bg-secondary">
+                <div class="container">
+                    <input  type="image" style="vertical-align: bottom;" src="{% static './images/leaf-regular-72.png' %}" />
+                    <div class="overlay">
+                        <a href="{% url 'customer_claims' customer_calendar.id  %}">
+                        <input type="image" style="vertical-align: bottom;" src="{% static './images/leaf-solid-72.png' %}" />
+                        </a>
+                        </div>
+                </div>
+                
+                
+            </li>
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" class="input_active" style="vertical-align: bottom;" src="{% static './images/calendar-regular-72.png' %}" />
+                    <div class="overlay">
+                        <a href="{% url 'customer_calendar' customer_calendar.id  %}">
+                            <input type="image" style="vertical-align: bottom;" src="{% static './images/calendar-solid-72.png' %}" />
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" style="vertical-align: bottom;" src="{% static './images/wallet-regular-72.png' %}" />
+                    <div class="overlay">
+                            <a href="{% url 'customer_invoice' customer_calendar.id  %}">
+                                <input type="image" style="vertical-align: bottom;" src="{% static './images/wallet-solid-72.png' %}" />
+                            </a>
+                        </div>
+                </div>
+                
+            </li>
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" style="vertical-align: bottom;" src="{% static './images/paper-plane-regular-72.png' %}" />
+                    <div class="overlay">
+                        <input type="image" style="vertical-align: bottom;" src="{% static './images/paper-plane-solid-72.png' %}" />
+                        </div>
+                </div>
+            </li>
+        </ul>
+        
+    </div>
+    
+    <div class="col-11" style="height: 100vh;"> 
+        <div class="row m-0 text-start border">
+
+        </div>
+
+        <div class="row m-0 text-start" >
+            <div class="col-12 p-2">
+                <table class="table table-striped table-hover table-bordered ">
+                    <thead class="table-dark">
+                    <tr>
+                        <th class="col-4" scope="col">Termin</th>
+                        <th class="col-4" scope="col">Behandlung</th>
+                        <th class="col-4" scope="col">Notitz</th>
+                        <th class="col-4" scope="col">Google</th>
+                        <th class="col-4" scope="col">Rechnung</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% if current_calendars %}
+                        {%for current_calendar in current_calendars %}
+                        <tr>
+                            
+                            <td><a class="text-dark" href="{% url 'calendar_detail' current_calendar.id %}">Am {{current_calendar.day|date:"d.m.Y"}} von {{current_calendar.time_begin|time:"H:i"}} bis {{current_calendar.time_end|time:"H:i"}} Uhr</td></a>
+                            <td>{{ current_calendar.get_product_display }}</td>
+                            <td>{{current_calendar.note}}</td>    
+                            <td>{{current_calendar.googlecalendar}}</td> 
+                            <td>{{current_calendar.invoice}}</td> 
+                        </tr>
+                            {% endfor %}
+                        {% endif %}
+                    
+
+                        
+                    </tbody>
+            </div>
+
+        </div>
+    </div>               
+
+</div>    
+
+
+
+
+
+
+
+{%endblock%}

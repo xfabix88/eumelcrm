@@ -1,0 +1,55 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+<div class="row m-0">
+    <div class=" row g-0 ">
+      <div class="col-12 topleiste"> 
+          <span class="toptitel"><strong>NEUEN TERMIN ANLEGEN</strong></span>
+          <span class="toptitel" >
+            <strong>{{current_customer.first_name}} {{current_customer.last_name}}</strong>
+          </span>
+          <span class="toptitel_add">
+            ( 30 Jahre - Nr. {{current_customer.id}} )
+        </span>
+      </div>
+
+    </div>
+      <div class="col border side">
+  
+      </div>
+
+        
+      <div class="col-11 " style="height: 100vh;">
+        <div class="row">
+          <div class =" col-1 text-end">   
+            <p style="height: 38px; line-height: 38px;">Produkt:</p>
+            <p style="height: 38px; line-height: 38px;">Notiz:</p>
+            <p style="height: 38px; line-height: 38px;">Datum:</p>
+            <p style="height: 38px; line-height: 38px;">Von:</p>
+            <p style="height: 38px; line-height: 38px;">Bis:</p>
+  
+          </div>
+          <div class ="col-4">            
+              <form method="POST" >
+                  {% csrf_token %}
+                  {{ form.as_p }}
+              </br>
+                  <button type="submit" class="btn btn-lg btn-success">SPEICHERN</button>
+                  <a type="button" class="btn btn-lg btn-secondary" href="{% url 'customers'  %}">ABBRECHEN</a>
+              </form>
+          </div>
+          <div class="col-7">
+            <object data="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FBerlin&bgcolor=%23ffffff&mode=WEEK&showPrint=0&showTz=0&showCalendars=0&src=cjcxcGE0YzE2N2djMXZxczQydTU3dmRzaGNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23A79B8E" style="border-width:0" width="1000" height="800" frameborder="0" scrolling="no"></object>
+          </div>
+
+        </div>
+
+
+
+            
+      </div>
+</div>
+
+
+{%endblock%}

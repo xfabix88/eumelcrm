@@ -1,0 +1,113 @@
+.side {
+
+  margin-left: 0px;
+  background-color:aliceblue
+}
+.leiste {
+
+  background-color:aliceblue
+}
+
+.topleiste{
+  padding-top: 10px;
+  height: 70px;
+  
+}
+
+.sidebar {
+  width: 102px;
+  margin-left: 30px;
+  margin-top: 15px;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  background-color: black;
+}
+
+.sidebar li {
+  list-style-type: none; 
+  text-align: center;
+  min-width: 72px; 
+  max-width: 72px; 
+  min-height:72px;
+  max-height:72px;
+  margin-top: 10px;
+  
+    
+}
+
+
+.container {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  }
+  
+  .image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+.container:hover .overlay {
+    opacity: 1;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: hwb(110 35% 27%);
+  }
+  .input_active{
+    background-color: rgba(255, 156, 27, 0.8);
+  }
+
+  .myCell {
+
+    padding:0px;
+    min-height:32px;
+    
+  }
+
+  .navbar{
+    
+    background-color: aliceblue;
+    
+        
+  }
+
+  .toptitel{
+    padding-left:50px;;
+    font-size: 30px;;
+  }
+
+  .toptitel_add{
+    padding-left:0px;;
+    font-size: 30px;;
+  }
+
+  .form-control2 {
+    display: block;
+    width: 20%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color:  #2e87e0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #bb0000;
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}

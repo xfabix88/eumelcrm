@@ -1,0 +1,91 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+<div class="row  m-0">
+  <div class="col-12 topleiste"> 
+    <span class="toptitel" >
+      <strong>{{current_customer.first_name}} {{current_customer.last_name}}</strong>
+  </span>
+  <span class="toptitel_add">
+          ( 30 Jahre - Nr. {{current_customer.id}} )
+  </span>
+  <span class="toptitel" >
+      <strong>Termin: {{current_calendar.day|date:"d.m.Y"}}</strong> von <strong>{{current_calendar.time_begin|time:"H:i"}} </strong>bis <strong>{{current_calendar.time_end|time:"H:i"}} Uhr</strong>
+  </span>
+  </div>
+    <div class="col border side">
+        
+      </div>
+    
+      <div class="col-11 " style="height: 100vh;">
+        <div class ="row">
+          <div>
+            <table class="table table-striped table-hover table-bordered ">
+              <thead class="table-dark">
+              <tr>
+
+                  <th class="col-1" scope="col">Behandlung</th>
+                  <th class="col-3" scope="col">Beschreibung</th>
+                  <th class="col-1" scope="col">Anzahl</th>
+                  <th class="col-1" scope="col">Faktor</th>
+                  <th class="col-1" scope="col">Preis</th>
+                  <th class="col-1" scope="col">Endpreis</th>
+
+              </tr>
+              </thead>
+              <tbody>
+                {% if current_positions %}
+            
+                    {% for position in current_positions  %}
+                    <tr>
+                    
+                        <td><a class="text-dark" href="{% url 'position_detail' position.id %}">{{position.number}}</a></td>
+                        <td>{{position.description}}</td>
+                        <td>{{position.count}}</td>
+                        <td>{{position.factor}}</td>
+                        <td>{{position.price}}</td>
+                        <td>{{position.endprice2}}</td>
+
+                    </tr>
+                   
+                    {% endfor %}
+                    
+    
+                  
+
+                
+                  {% endif %}
+              
+                  <tr>     
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><strong>GESAMT</strong></td>
+                    <td><strong>{{summe}}</strong></td>
+                  </tr>
+                  
+              </tbody>
+            </table>
+          </div>
+   
+
+           
+            {% for field in form  %}
+            <div class="col-1">
+             {{ field }} 
+            </div>
+          {% endfor %}
+        </div>
+        <form method="POST" >
+          {% csrf_token %}
+        
+          
+            <a type="button" class="btn btn-lg btn-warning" href="{% url 'calendar_detail' current_calendar.id %}">ZURÜCK</a>
+        </form>
+    </div>
+</div>
+
+{%endblock%}
+

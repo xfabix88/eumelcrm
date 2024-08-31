@@ -1,0 +1,269 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+{% load static %}
+
+<div class="row m-0 border-top ">
+    <div class=" row g-0 ">
+        <div class="col-10 topleiste "> 
+            <span class="toptitel" >
+                <strong>{{customer.first_name}} {{customer.last_name}}</strong></span>
+            <span class="toptitel_add">( 30 Jahre - Nr. {{customer.id}} )</span>
+        </div>
+        <div class="col-1 ">
+            <a href="{% url 'update_customer' customer.id%}" type="button" class="btn btn-warning mt-3">PATIENT ÄNDERN</a>
+        </div>
+        <div class="col-1 ">
+            <a type="button" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#löschen">
+                PATIENT LÖSCHEN
+            </a>
+        </div>
+
+    </div>
+</div>
+<div class="row g-0">
+    <div class="col-1 text-center border side">
+
+        <ul class="sidebar">
+            <li class=" ">
+                <div class="container ">
+                    <input class="input_active" type="image" style="vertical-align: bottom; " src="{% static './images/face-regular-72.png' %}" />
+                    <div class="overlay">
+            
+                        <input type="image" style="vertical-align: bottom;" src="{% static './images/face-solid-72.png' %}" />
+                    
+                    </div>
+                </div>
+            </li>
+            
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" style="vertical-align: bottom;" src="{% static './images/leaf-regular-72.png' %}" />
+                    <div class="overlay">
+                        <a href="{% url 'customer_claims' customer.id  %}">
+                        <input type="image" style="vertical-align: bottom;" src="{% static './images/leaf-solid-72.png' %}" />
+                        </a>
+                        </div>
+                </div>
+                
+                
+            </li>
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" style="vertical-align: bottom;" src="{% static './images/calendar-regular-72.png' %}" />
+                    <div class="overlay">
+                        <a href="{% url 'customer_calendar' customer.id  %}">
+                            <input type="image" style="vertical-align: bottom;" src="{% static './images/calendar-solid-72.png' %}" />
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" style="vertical-align: bottom;" src="{% static './images/wallet-regular-72.png' %}" />
+                    <div class="overlay">
+                            <a href="{% url 'customer_invoice' customer.id  %}">
+                                <input type="image" style="vertical-align: bottom;" src="{% static './images/wallet-solid-72.png' %}" />
+                            </a>
+                        </div>
+                </div>
+                
+            </li>
+            <li class="bg-secondary">
+                <div class="container">
+                    <input type="image" style="vertical-align: bottom;" src="{% static './images/paper-plane-regular-72.png' %}" />
+                    <div class="overlay">
+                        <input type="image" style="vertical-align: bottom;" src="{% static './images/paper-plane-solid-72.png' %}" />
+                        </div>
+                </div>
+            </li>
+        </ul>
+        
+    </div>
+    
+    <div class="col-11" style="height: 100vh;"> 
+            <div class="container-fluid text-start ">
+                <div class="row  border-top">
+                    <div class="col-6 g-0 p-2">
+                        <div class="row p-3 g-0 ">
+                            <div class="container-fluid text-start ">
+            
+                                <div class="row myCell">
+                                    <div class="col border-top border-start border-end ">
+                                        <strong>TITEL</strong>
+                                    </div>
+                                    <div class="col border-top  ">
+                                        <strong>VORNAME*</strong>
+                                    </div>
+                                    <div class="col border-top border-start border-end ">
+                                        <strong>NACHNAME*</strong>
+                                    </div>
+                                
+                                </div>
+                                <div class="row myCell"> 
+                                    <div class="col border-bottom border-start border-end">
+                                        <p>{{customer.title}}</p>
+                                    </div>
+                                    <div class="col border-bottom">
+                                        <p>{{customer.first_name}}</p>
+                                    </div>
+                                    <div class="col border-bottom border-start border-end">
+                                        <p>{{customer.last_name}}</p>
+                                    </div> 
+                                </div>
+                
+                            </div>
+                            <div class="container-fluid  ">
+                                <div class="row myCell">
+                                    <div class="col border-start border-end">
+                                        <strong>GESCHLECHT</strong>
+                                    </div>
+                                    <div class="col">
+                                        <strong>GEBURTSDATUM</strong>
+                                    </div>
+                                    <div class="col border-start border-end">
+                                        <strong>KUNDENNUMMER</strong>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row myCell"> 
+                                    <div class="col border-bottom border-start border-end" >
+                                        <p>{{customer.sex}}</p>
+                                    </div>
+                                    <div class="col border-bottom ">
+                                        <p>{{customer.birthday}}</p>
+                                    </div>
+                                    <div class="col border-bottom border-start border-end">
+                                        <p>{{customer.id}}</p>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-3 g-0  ">
+                            <div class="container-fluid ">
+            
+                                <div class="row myCell">
+                                    <div class="col border-top border-start border-end ">
+                                        <strong>EMAIL</strong>
+                                    </div>
+                                </div>
+                                <div class="row myCell"> 
+                                    <div class="col border-bottom border-start border-end">
+                                        <p>{{customer.mail}}</p>
+                                    </div>
+                                </div>
+                
+                            </div>
+                            <div class="container-fluid  ">
+                                <div class="row myCell">
+                                    <div class="col border-start border-end">
+                                        <strong>MOBIL</strong>
+                                    </div>
+                                    <div class="col border-end">
+                                        <strong>FESTNETZ</strong>
+                                    </div>
+            
+                                    
+                                </div>
+                                <div class="row myCell"> 
+                                    <div class="col border-bottom border-start border-end" >
+                                        <p>{{customer.mobile}}</p>
+                                    </div>
+                                    <div class="col border-bottom border-end ">
+                                        <p>{{customer.phone}}</p>
+                                    </div>
+            
+                                </div>
+                            </div>
+                            <div class="container-fluid ">
+                                <div class="row myCell border-end">
+                                    <div class="col border-start border-end ">
+                                        <strong>Straße</strong>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row " >
+                                            <div class="col-3"  >
+                                                <strong>PLZ</strong>
+                                            </div>
+                                            <div class="col  ">
+                                                <strong>ORT</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+            
+                                    
+                                </div>
+                                <div class="row myCell border-end ">
+                                    <div class="col border-start border-end">
+                                        <p>{{customer.street}} {{customer.housenumber}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row myCell" >
+                                            <div class="col-3 ">
+                                                <p>{{customer.plz}}</p>
+                                            </div>
+                                            <div class="col ">
+                                                <p>{{customer.city}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                </div>
+            
+                            </div>
+                            <div class="container-fluid ">
+            
+                                <div class="row myCell ">
+                                    <div class="col border-top border-start border-end ">
+                                        <strong>Land</strong>
+                                    </div>
+                                </div>
+                                <div class="row myCell"> 
+                                    <div class="col border-bottom border-start border-end">
+                                        <p>{{customer.country}}</p>
+                                    </div>
+                                </div>
+                
+                            </div>
+                        </div>
+                
+                    </div>
+                    <div class="col-6 p-2">
+                        <div class="row ps-3 g-0 mt-3 border">
+
+                            <a class="text-dark" href="{% url 'customer_diagnose' customer.id%}" ><strong>DIAGNOSEN</strong></a>
+                            <p></p>
+                            <span class="pb-2">{{customer.diagnose}}</span>
+                        </div>>
+                    </div>
+                </div>
+            </div>
+                
+    </div>
+</div>    
+
+
+<div class="modal fade" id="löschen" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Patient löschen</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        Patient wirklich löschen?
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ZURÜCK</button>
+        <a href="{% url 'delete_customer' customer.id%}" role="button" class="btn btn-danger">LÖSCHEN</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+
+{%endblock%}

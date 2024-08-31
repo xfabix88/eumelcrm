@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+<div class="row  m-0">
+  <div class=" row g-0 ">
+    <div class="col topleiste border"> 
+        <span class="toptitel" >
+            <strong>{{current_customer.first_name}} {{current_customer.last_name}}</strong>
+        </span>
+        <span class="toptitel_add">
+                ( 30 Jahre - Nr. {{current_customer.id}} )
+        </span>
+        <span class="toptitel" >
+            <strong>Termin: {{current_calendar.day|date:"d.m.Y"}}</strong> von <strong>{{current_calendar.time_begin|time:"H:i"}} </strong>bis <strong>{{current_calendar.time_end|time:"H:i"}} Uhr</strong>
+        </span>
+    </div>
+  </div>
+    <div class="col border side">
+        
+      </div>
+    
+      <div class="col-11 " style="height: 100vh;">
+        <div class ="row mt-2">
+            <div class =" col-1 text-end">   
+                <p style="height: 38px; line-height: 38px;">Produkt:</p>
+                <p style="height: 38px; line-height: 38px;">Beschreibung:</p>
+                <p style="height: 38px; line-height: 38px;">Preis:</p>
+                <p style="height: 38px; line-height: 38px;">Anzahl:</p>
+                <p style="height: 38px; line-height: 38px;">Faktor:</p>
+                
+            </div>
+   
+                <div class="col-5">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    </br>
+                        <button type="submit" class="btn btn-lg btn-success"> FORTSETZEN</button>
+                      
+                    </form>
+                  </div>
+
+
+        </div>
+        </div>
+
+{%endblock%}
+
